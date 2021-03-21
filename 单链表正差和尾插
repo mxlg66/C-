@@ -1,0 +1,65 @@
+#include <iostream>
+#include <queue>
+#include <cstring>
+using namespace std;
+struct Node
+{
+    int data;
+    Node* next;
+};
+void insert(Node* la, int x)
+{
+    Node* q = new Node;
+    q->data = x;
+    Node* p = la;
+    Node* r = la;
+    if (x > 0)
+    {
+        q->next = p->next;
+        p->next = q;
+    }
+    else
+    {
+        while (r->next != NULL)
+            r = r->next;
+        r->next = q;
+        q->next = NULL;
+    }
+}
+void destroy(Node* la)
+{
+    while (la)
+    {
+        Node* q = la->next;
+        delete la;
+        la = q;
+    }
+}
+void print(Node* la)
+{
+    la = la->next;
+    if (la)
+    {
+        cout << la->data;
+        la = la->next;
+    }
+    while (la)
+    {
+        cout << "->" << la->data;
+        la = la->next;
+    }
+    cout << endl;
+}
+int main()
+{
+    Node* la = new Node;
+    la->next = NULL;
+    int x;
+    while (cin >> x && x != 0)
+    {
+        insert(la, x);
+    }
+    print(la);
+    destroy(la);
+    return 0;
+}
