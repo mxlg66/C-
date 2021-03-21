@@ -1,0 +1,16 @@
+#include <iostream>
+#include <list>
+using namespace std;
+int main()
+{
+	list<int> q;
+	int x;
+	while (cin >> x && x != 0)
+	{
+		if (x > 0)
+			q.push_front(x);
+		else
+			q.push_back(x);
+	}
+		copy(begin(q), end(q), ostream_iterator<int>(cout, "\t"));
+}
