@@ -12,8 +12,8 @@ class yuan
 {
 private:
 	double r;
-	double p;
 	double a;
+	double b;
 public:
 	void input();
 	void output();
@@ -23,13 +23,13 @@ public:
 };
 double yuan::zhouchang()
 {
-	p = 2 * pi * r;
-	return p;
+	a = 2 * pi * r;
+	return a;
 }
 double yuan::area()
 {
-	a = pi * r * r;
-	return a;
+	b = pi * r * r;
+	return b;
 }
 void yuan::input()
 {
