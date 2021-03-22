@@ -1,0 +1,49 @@
+#include<iostream>
+#include<iomanip> 
+#include<cstring>
+#include<cmath>
+#include<stack>
+#include<queue>
+#include <list>
+#include<assert.h>
+#define pi 3.14
+using namespace std;
+class yuan
+{
+private:
+	double r;
+	double p;
+	double a;
+public:
+	void input();
+	void output();
+	double zhouchang();
+	double area();
+
+};
+double yuan::zhouchang()
+{
+	p = 2 * pi * r;
+	return p;
+}
+double yuan::area()
+{
+	a = pi * r * r;
+	return a;
+}
+void yuan::input()
+{
+	cin >> r;
+}
+void yuan::output()
+{
+	cout << zhouchang() << endl;
+	cout <<  area() << endl;
+}
+int main(void)
+{
+	yuan circle;
+	circle.input();
+	circle.output();
+	return 0;
+}
