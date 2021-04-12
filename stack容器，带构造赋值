@@ -1,0 +1,117 @@
+#include<iostream>
+#include<iomanip> 
+#include<cstring>
+#include<cmath>
+#include<assert.h>
+using namespace std;
+class stack {
+public:
+	stack();
+	~stack();
+	void push(int x);
+	bool empty() const;
+	void pop();
+	int top() const;
+	stack(const stack&);
+	stack(stack&&)noexcept;
+	stack& operator = (const stack& rhs);
+	stack& operator = (stack&&)noexcept;
+private:
+	struct Node
+	{
+		Node():next(nullptr){}
+		int data;
+		Node* next;
+	}*m_head;
+};
+stack::stack(){}
+stack::~stack()
+{
+	while (m_head != nullptr)
+	{
+		Node* p = m_head;
+		m_head = m_head->next;
+		delete p;
+	}
+}
+void stack::push(int x)
+{
+	Node* p = new Node;
+	p->data = x;
+	p->next = m_head;
+	m_head = p;
+}
+bool stack::empty()const
+{
+	return(m_head == nullptr);
+}
+int stack::top()const
+{
+	return m_head->data;
+}
+void stack::pop()
+{
+	Node* p = m_head;
+	m_head = p->next;
+	delete p;
+}
+stack::stack(const stack& rhs)
+{
+	m_head = new Node;
+	Node* last = m_head;
+	Node* p = rhs.m_head->next;
+	while (p)
+	{
+		Node* q = new Node;
+		q->data = p->data;
+		last->next = q;
+		last = q;
+		p = p->next;
+	}
+	last->next = NULL;
+}
+stack::stack(stack&& rhs)noexcept
+{
+	m_head = rhs.m_head;
+	rhs.m_head = NULL;
+}
+stack& stack::operator=(const stack& rhs)
+{
+	stack tmp(rhs);
+	Node* t = m_head;
+	m_head = tmp.m_head;
+	tmp.m_head = t;
+	return *this;
+}
+stack& stack::operator=(stack&& rhs)noexcept
+{
+	Node* p = this->m_head;
+	this->m_head = rhs.m_head;
+	rhs.m_head = p;
+	return *this;
+}
+int main()
+{
+	stack A, B;
+	int i, m, x, y, n,l;
+	cin >> m;
+	for (i = 0; i < m; i++)
+	{
+		cin >> x >> y;
+		A.push(x);
+		B.push(y);
+	}
+	while (!A.empty())
+	{
+		n = A.top();
+		cout << n << " ";
+		A.pop();
+	}
+	while (!B.empty())
+	{
+		l = B.top();
+		cout << l << " ";
+		B.pop();
+	}
+	cout << endl;
+}
