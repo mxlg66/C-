@@ -22,7 +22,7 @@ private:
 		Node():next(nullptr){}
 		int data;
 		Node* next;
-	}*m_head;
+	}*m_head=nullptr;
 };
 stack::stack(){}
 stack::~stack()
