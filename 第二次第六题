@@ -1,0 +1,128 @@
+#include<iostream>
+#include<iomanip> 
+#include<cstring>
+#include<cmath>
+#include<assert.h>
+using namespace std;
+class CSamplePart {
+public:
+	CSamplePart();
+	~CSamplePart();
+	void push(int x);
+	bool empty() const;
+	void pop();
+	int top() const;
+	CSamplePart(const CSamplePart&);
+	CSamplePart(CSamplePart&&) noexcept;
+	CSamplePart& operator = (const CSamplePart& rhs);
+	CSamplePart& operator = (CSamplePart&&) noexcept;
+private:
+	struct Node
+	{
+		int data;
+		Node* next;
+	}*m_head;//=nullptr;
+};
+class text {
+public:
+	CSamplePart A;
+	void ssr(CSamplePart &A)
+	{
+		CSamplePart B(A);
+		int y;
+		while (!B.empty())
+		{
+			y = B.top();
+			cout << y << " ";
+			B.pop();
+		}
+		cout << endl;
+	}
+};
+CSamplePart::CSamplePart()
+{
+	m_head = nullptr;
+}
+CSamplePart::~CSamplePart()
+{
+	while (m_head)
+	{
+		Node* p = m_head;
+		m_head = p->next;
+		delete p;
+	}
+}
+void CSamplePart::push(int x)
+{
+	Node* p = new Node;
+	p->data = x;
+	p->next = m_head;
+	m_head = p;
+}
+bool CSamplePart::empty()const
+{
+	return(m_head == nullptr);
+}
+int CSamplePart::top()const
+{
+
+	return m_head->data;
+}
+void CSamplePart::pop()
+{
+	Node* p = m_head;
+	m_head = p->next;
+	delete p;
+}
+CSamplePart::CSamplePart(const CSamplePart& rhs)
+{
+	m_head = new Node;
+	m_head->data = rhs.m_head->data;
+	m_head->next = rhs.m_head->next;
+	Node* last = m_head;
+	Node* p = rhs.m_head->next;
+	while (p)
+	{
+		Node* q = new Node;
+		q->data = p->data;
+		q->next = p->next;
+		last->next = q;
+		last = q;
+		p = p->next;
+	}
+	last->next = NULL;
+}
+CSamplePart::CSamplePart(CSamplePart&& rhs) noexcept
+{
+	m_head = rhs.m_head;
+	rhs.m_head = NULL;
+}
+CSamplePart& CSamplePart::operator=(const CSamplePart& rhs)
+{
+	CSamplePart tmp(rhs);
+	Node* t = m_head;
+	m_head = tmp.m_head;
+	tmp.m_head = t;
+	return *this;
+}
+CSamplePart& CSamplePart::operator=(CSamplePart&& rhs) noexcept
+{
+	Node* p = this->m_head;
+	this->m_head = rhs.m_head;
+	rhs.m_head = p;
+	return *this;
+}
+int main()
+{
+	CSamplePart C;
+	int i, m, x;
+	cin >> m;
+	for (i = 0; i < m; i++)
+	{
+		cin >> x;
+		C.push(x);
+	}
+	text a;
+	a.ssr(C);
+	system("pause");
+}
